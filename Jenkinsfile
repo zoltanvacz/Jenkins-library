@@ -15,7 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Cloning Image from repo..."
-                git clone https://github.com/zoltanvacz/Devops-Test-App.git
+                sh "git clone https://github.com/zoltanvacz/Devops-Test-App.git"
                 sh "cd Devops-Test-App"
                 sh "docker build -t zoltanvacz/devops-test-app:1.2 ."
                 sh "docker image ls zoltanvacz/devops-test-app:1.2"
