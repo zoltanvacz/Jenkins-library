@@ -28,7 +28,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh "git clone https://github.com/zoltanvacz/Devops-Test-App-Config.git"
+                    //sh "git clone https://github.com/zoltanvacz/Devops-Test-App-Config.git"
                     sh "git checkout -b ${VERSION}"
                     File conf = new File('Devops-Test-App-Config/dev/deployment.yaml')
                     println conf.text
