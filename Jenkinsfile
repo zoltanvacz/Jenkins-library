@@ -16,11 +16,8 @@ pipeline {
             steps {
                 script {
                     echo "Cloning Image from repo..."
-                    sh "pwd"
                     //sh "git clone https://github.com/zoltanvacz/Devops-Test-App.git"
-                    sh "cd Devops-Test-App"
-                    sh "ls"
-                    sh "docker build -t zoltanvacz/devops-test-app:1.2 ."
+                    sh "docker build -t zoltanvacz/devops-test-app:1.2 -f Devops-Test-App ."
                     //docker.build("zoltanvacz/devops-test-app:1.2", "-f Devops-Test-App/Dockerfile .")
                     sh "docker image ls zoltanvacz/devops-test-app:1.2"
                     sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
