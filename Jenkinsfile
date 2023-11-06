@@ -17,7 +17,7 @@ pipeline {
                 script {
                     echo "Cloning Image from repo..."
                     sh "pwd"
-                    sh "git clone https://github.com/zoltanvacz/Devops-Test-App.git"
+                    //sh "git clone https://github.com/zoltanvacz/Devops-Test-App.git"
                     sh "cd Devops-Test-App"
                     sh "ls"
                     sh "docker build -t zoltanvacz/devops-test-app:1.2 ."
