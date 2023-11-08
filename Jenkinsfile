@@ -1,12 +1,3 @@
-@Grab('org.yaml:snakeyaml:1.17')
-import org.yaml.snakeyaml.*
-import org.yaml.snakeyaml.constructor.*
-import groovy.transform.*
-import org.yaml.snakeyaml.Yaml
-import  java.nio.file.Path
-import groovy.io.FileType
-import groovy.json.JsonSlurper
-
 pipeline {
     agent any
     parameters {
@@ -41,12 +32,9 @@ pipeline {
                     dir('Devops-Test-App-Config') {
                         sh "pwd"
                         sh "git checkout -b ${VERSION}"
+                        sh "sed -i 's|image: zoltanvacz/devops-test-app:1.0|image: zoltanvacz/devops-test-app:${VERSION}|g' /dev/deployment.yaml"
                         File conf = new File('/dev/deployment.yaml')
                         println conf.text
-
-                        def yamlfile = new Yaml().load(new FileReader('/dev/deployment.yaml'))
-                        yamlfile.spec.template.spec.containers[0].image='zoltanvacz/devops-test-app:"${VERSION}"'
-                        print (yamlfile)
                     }
                     sh "git checkout main"
                     sh "git branch -d ${VERSION}"
