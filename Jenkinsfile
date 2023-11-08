@@ -1,3 +1,12 @@
+@Grab('org.yaml:snakeyaml:1.17')
+import org.yaml.snakeyaml.*
+import org.yaml.snakeyaml.constructor.*
+import groovy.transform.*
+import org.yaml.snakeyaml.Yaml
+import  java.nio.file.Path
+import groovy.io.FileType
+import groovy.json.JsonSlurper
+
 pipeline {
     agent any
     parameters {
