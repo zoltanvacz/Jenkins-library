@@ -33,8 +33,9 @@ pipeline {
                     sh "git checkout -b ${VERSION}"
                     File conf = new File('/var/jenkins_home/workspace/CI-CD Pipeline/Devops-Test-App-Config/dev/deployment.yaml')
                     println conf.text
-                    sh "cd Devops-Test-App-Config"
-                    sh "pwd"
+                    dir('Devops-Test-App-Config') {
+                        sh "pwd"
+                    }
                     //sh "git branch -d ${VERSION}"
                 }
             }
