@@ -32,8 +32,11 @@ pipeline {
                         sh "pwd"
                         sh "git checkout -b ${VERSION}"
                         sh "sed -i 's|image: zoltanvacz/devops-test-app:1.0|image: zoltanvacz/devops-test-app:${VERSION}|g' dev/deployment.yaml"
-                        File conf = new File('/dev/deployment.yaml')
-                        println conf.text
+                        //File conf = new File('/dev/deployment.yaml')
+                        //println conf.text
+                        sh "git add ."
+                        sh "git commit -m 'releasing new version ${VERSION}'"
+                        sh "git push"
                     }
                     sh "git checkout main"
                     sh "git branch -d ${VERSION}"
