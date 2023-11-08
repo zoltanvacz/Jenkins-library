@@ -36,7 +36,8 @@ pipeline {
                     dir('Devops-Test-App-Config') {
                         sh "pwd"
                     }
-                    //sh "git branch -d ${VERSION}"
+                    sh "git checkout main"
+                    sh "git branch -d ${VERSION}"
                 }
             }
         }
