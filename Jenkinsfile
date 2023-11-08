@@ -38,7 +38,7 @@ pipeline {
                         //println conf.text
                         sh "git add ."
                         sh "git commit -m 'releasing new version ${VERSION}'"
-                        sh "git push"
+                        sh "git push --set-upstream origin ${VERSION}"
                     }
                     sh "git checkout main"
                     sh "git branch -d ${VERSION}"
