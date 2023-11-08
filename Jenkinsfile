@@ -29,12 +29,15 @@ pipeline {
             steps {
                 script {
                     //sh "git clone https://github.com/zoltanvacz/Devops-Test-App-Config.git"
-                    sh "pwd"
-                    sh "git checkout -b ${VERSION}"
-                    File conf = new File('/var/jenkins_home/workspace/CI-CD Pipeline/Devops-Test-App-Config/dev/deployment.yaml')
-                    println conf.text
                     dir('Devops-Test-App-Config') {
                         sh "pwd"
+                        sh "git checkout -b ${VERSION}"
+                        File conf = new File('/dev/deployment.yaml')
+                        println conf.text
+
+                        def yamlfile = new Yaml().load(new FileReader('/dev/deployment.yaml'))
+                        yamlfile.spec.template.spec.containers[0].image='zoltanvacz/devops-test-app:"${VERSION}"'
+                        print (yamlfile)
                     }
                     sh "git checkout main"
                     sh "git branch -d ${VERSION}"
