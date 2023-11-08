@@ -31,7 +31,7 @@ pipeline {
                     //sh "git clone https://github.com/zoltanvacz/Devops-Test-App-Config.git"
                     sh "git branch -a"
                     sh "pwd"
-                    sh "git branch | grep -v "main" | xargs git branch -D"
+                    sh "git branch | grep -v \"main\" | xargs git branch -D"
                     sh "git checkout -b ${VERSION}"
                     File conf = new File('Devops-Test-App-Config/dev/deployment.yaml')
                     println conf.text
