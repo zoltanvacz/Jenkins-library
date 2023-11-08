@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     //sh "git clone https://github.com/zoltanvacz/Devops-Test-App-Config.git"
-                    sh "pws"
+                    sh "pwd"
                     sh "git branch -a"
                     sh "git checkout -b ${VERSION}"
                     File conf = new File('/var/jenkins_home/workspace/CI-CD Pipeline/Devops-Test-App-Config/dev/deployment.yaml')
