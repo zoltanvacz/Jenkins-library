@@ -29,7 +29,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh "git clone https://github.com/zoltanvacz/Devops-Test-App-Config.git"
+                    //sh "git clone https://github.com/zoltanvacz/Devops-Test-App-Config.git"
                     dir('Devops-Test-App-Config') {
                         sh "pwd"
                         sh "git checkout -b ${VERSION}"
