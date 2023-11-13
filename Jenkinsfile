@@ -18,7 +18,7 @@ pipeline {
                     echo "Cloning Image from repo..."
                     //sh "git config --global user.email 'jenkins@jenkins.com'"
                     //sh "git config --global user.name 'jenkins'"
-                    sh "git clone https://github.com/zoltanvacz/Devops-Test-App.git"
+                    //sh "git clone https://github.com/zoltanvacz/Devops-Test-App.git"
                     sh "docker build -t zoltanvacz/devops-test-app:1.2 -f Devops-Test-App/Dockerfile ."
                     sh "docker image ls zoltanvacz/devops-test-app:1.2"
                     sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
@@ -29,7 +29,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    //sh "git clone https://github.com/zoltanvacz/Devops-Test-App-Config.git"
+                    sh "git clone https://github.com/zoltanvacz/Devops-Test-App-Config.git"
                     dir('Devops-Test-App-Config') {
                         sh "pwd"
                         sh "git checkout -b ${VERSION}"
