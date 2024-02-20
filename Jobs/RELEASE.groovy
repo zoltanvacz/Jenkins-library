@@ -9,8 +9,17 @@ def getAgents() {
 
 pipeline {
     agent any
-    parameters {
-        [$class: 'ChoiceParameter',
+    environment {
+        DOCKER_CREDS = credentials('docker')
+        GITHUB_TOKEN = credentials('GitHubToken')
+    }
+    stages {
+        stage('Jenkins UI') {
+            steps {
+                script {
+                    properties { [
+                        parameters([
+                             [$class: 'ChoiceParameter',
                                         choiceType: 'PT_MULTI_SELECT',
                                         filterLength: 1,
                                         filterable: true,
@@ -29,16 +38,17 @@ pipeline {
                                                 script: 'return ' + getAgents()
                                             ]
                                         ]
-                                    ]
-        choice(name: 'Application', choices: ['Devops-Test-App'], description: 'Select application')
-        string(name: 'VERSION', description: 'Enter version')
-        choice(name: 'Agent', choices: getAgents(), description: 'Select agent')
-    }
-    environment {
-        DOCKER_CREDS = credentials('docker')
-        GITHUB_TOKEN = credentials('GitHubToken')
-    }
-    stages {
+                                    ],
+                        choice(name: 'Application', choices: ['Devops-Test-App'], description: 'Select application'),
+                        string(name: 'VERSION', description: 'Enter version'),
+                        choice(name: 'Agent', choices: getAgents(), description: 'Select agent')
+                        ])
+                    ] }
+
+                    }
+                }
+            }
+        }
         stage('Clone App Repo') {
             steps {
                 script {
