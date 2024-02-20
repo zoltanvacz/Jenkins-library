@@ -38,5 +38,17 @@ pipeline {
                 }
             }
         }
+        stage('Deploy') {
+            steps {
+                script {
+                    echo "Deploying new version ${VERSION}..."
+                    def deploymentFile = 'dev/deployment.yaml'
+                    def data = readYaml file: deploymentFile
+                    data.spec.template.spec.containers[0].image = "zoltanvacz/devops-test-app:${VERSION}"
+                    sh "rm -f ${deploymentFile}"
+                    writeYaml file: deploymentFile, data: data
+                }
+            }
+        }
     }
 }
