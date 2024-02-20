@@ -1,10 +1,8 @@
 def getAgents() {
     def agents = []
     def nodes = Jenkins.instance.nodes
-    nodes.each { node ->
-        if (node instanceof hudson.slaves.DumbSlave) {
-            agents.add(node.name)
-        }
+    for (def i = 0; i < 5; i++) {
+        agents.add("Agent" + i)
     }
     return agents
 }
@@ -12,6 +10,26 @@ def getAgents() {
 pipeline {
     agent any
     parameters {
+        [$class: 'ChoiceParameter',
+                                        choiceType: 'PT_MULTI_SELECT',
+                                        filterLength: 1,
+                                        filterable: true,
+                                        name: 'SVCNAME',
+                                        script: [
+                                            $class: 'GroovyScript',
+                                            fallbackScript: [
+                                                classpath: [],
+                                                sandbox: true,
+                                                script:
+                                                    "return['Could not fetch the services']"
+                                            ],
+                                            script: [
+                                                classpath: [],
+                                                sandbox: true,
+                                                script: 'return ' + getAgents()
+                                            ]
+                                        ]
+                                    ]
         choice(name: 'Application', choices: ['Devops-Test-App'], description: 'Select application')
         string(name: 'VERSION', description: 'Enter version')
         choice(name: 'Agent', choices: getAgents(), description: 'Select agent')
