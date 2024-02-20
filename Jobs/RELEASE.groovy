@@ -10,15 +10,15 @@ pipeline {
     }
     stages {
         stage('Clone App Repo') {
+            script {
+                def AppRepo = "${env.Application}-Config"
+            }
+            when {
+                expression { return !fileExists(AppRepo) }
+            }
             steps {
                 script {
-                    def AppRepo = "${env.Application}-Config"
-                    when {
-                        expression { return !fileExists(AppRepo) }
-                        steps {
-                            sh "git clone https://github.com/zoltanvacz/${AppRepo}.git"
-                        }
-                    }
+                    sh "git clone https://github.com/zoltanvacz/${AppRepo}.git"
                 }
             }
         }
