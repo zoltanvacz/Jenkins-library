@@ -1,9 +1,9 @@
 def getAgents() {
-    def agents = [:]
+    def agents = []
     def nodes = Jenkins.instance.nodes
     nodes.each { node ->
         if (node instanceof hudson.slaves.DumbSlave) {
-            agents[node.name] = node.name
+            agents.add(node.name)
         }
     }
     return agents
