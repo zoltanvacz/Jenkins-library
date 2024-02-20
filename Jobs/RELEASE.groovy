@@ -51,9 +51,9 @@ pipeline {
                         sh "rm -f ${deploymentFile}"
                         writeYaml file: deploymentFile, data: data
 
-                        sh "git config --global user.email 'vaczzoltan12@gmail.com'"
-                        sh "git config --global user.name 'zoltanvacz'"
-
+                        sh "git config --global user.email 'jenkins@jenkins.com'"
+                        sh "git config --global user.name 'jenkins'"
+                        sh "git remote set-url origin https://github.com/zoltanvacz/Devops-Test-App-Config.git"
                         sh "git add ."
                         sh "git commit -m 'releasing new version ${VERSION}'"
                         if(branchExists) {
