@@ -18,8 +18,6 @@ pipeline {
             steps {
                 script {
                     sh "git clone https://github.com/zoltanvacz/${AppRepo}.git"
-                    sh "git config --global user.email 'jenkins@jenkins.com'"
-                    sh "git config --global user.name 'jenkins-user'"
                 }
             }
         }
@@ -51,6 +49,9 @@ pipeline {
                         data.spec.template.spec.containers[0].image = "zoltanvacz/devops-test-app:${VERSION}"
                         sh "rm -f ${deploymentFile}"
                         writeYaml file: deploymentFile, data: data
+
+                        sh "git config --global user.email 'jenkins@jenkins.com'"
+                        sh "git config --global user.name 'jenkins-user'"
 
                         sh "git add ."
                         sh "git commit -m 'releasing new version ${VERSION}'"
