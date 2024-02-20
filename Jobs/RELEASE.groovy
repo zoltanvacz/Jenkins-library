@@ -18,6 +18,8 @@ pipeline {
             steps {
                 script {
                     sh "git clone https://github.com/zoltanvacz/${AppRepo}.git"
+                    sh "git config --global user.email 'jenkins@jenkins.com'"
+                    sh "git config --global user.name 'jenkins-user'"
                 }
             }
         }
