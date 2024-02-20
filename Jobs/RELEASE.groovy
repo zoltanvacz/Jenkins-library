@@ -28,12 +28,7 @@ pipeline {
                         //def branchExists = sh "git rev-parse --verify origin/release-${VERSION}"
                         def branchExists = (sh (script: "git checkout release-${VERSION}", returnStatus: true) == 0)
                         echo branchExists
-                        if (branchExists) {
-                            sh "git checkout release-${VERSION}"
-                            } 
-                        else {
-                            sh "git checkout -b release-${VERSION}"
-                        }
+                        
                     }
                     echo "Deploying new version ${VERSION}..."
 
