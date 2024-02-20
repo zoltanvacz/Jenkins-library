@@ -7,12 +7,10 @@ pipeline {
     environment {
         DOCKER_CREDS = credentials('docker')
         GITHUB_TOKEN = credentials('GitHubToken')
+        AppRepo = "${env.Application}-Config"
     }
     stages {
         stage('Clone App Repo') {
-            script {
-                def AppRepo = "${env.Application}-Config"
-            }
             when {
                 expression { return !fileExists(AppRepo) }
             }
