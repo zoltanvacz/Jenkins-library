@@ -48,7 +48,6 @@ pipeline {
                     }
                 }
             }
-        }
         stage('Clone App Repo') {
             steps {
                 script {
@@ -70,3 +69,4 @@ pipeline {
             }
         }
     }
+}
