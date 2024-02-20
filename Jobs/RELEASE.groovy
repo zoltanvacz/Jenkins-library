@@ -26,9 +26,12 @@ pipeline {
                     dir('Devops-Test-App-Config') {
                         sh "git pull"
                         //def branchExists = sh "git rev-parse --verify origin/release-${VERSION}"
-                        boolean branchExists = (sh (script: "git rev-parse --verify origin/-${VERSION}", returnStatus: true) == 0)
-                        echo branchExists
-                        
+                        def branchExists = (sh (script: "git rev-parse --verify origin/release-${VERSION}", returnStatus: true) == 0)
+                        if (branchExists) {
+                            sh "git checkout release-${VERSION}"
+                        } else {
+                            sh "git checkout -b release-${VERSION}"
+                        }
                     }
                     echo "Deploying new version ${VERSION}..."
 
