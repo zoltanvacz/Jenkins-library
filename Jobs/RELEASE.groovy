@@ -1,3 +1,4 @@
+def branchExists
 pipeline {
     agent any
     parameters {
@@ -27,10 +28,10 @@ pipeline {
                         sh "git checkout main"
                         sh "git pull"
                         //def branchExists = sh "git rev-parse --verify origin/release-${VERSION}"
-                        def branchExists = (sh (script: "git rev-parse --verify origin/release-${VERSION}", returnStatus: true) == 0)
+                        branchExists = (sh (script: "git rev-parse --verify origin/release-${VERSION}", returnStatus: true) == 0)
                         if (branchExists) {
                             echo "Branch already exists!"
-                            //currentBuild.result = 'FAILURE'
+                            sh "git checkout release-${VERSION}"
                         } else {
                             sh "git checkout -b release-${VERSION}"
                         }
@@ -48,6 +49,14 @@ pipeline {
                         data.spec.template.spec.containers[0].image = "zoltanvacz/devops-test-app:${VERSION}"
                         sh "rm -f ${deploymentFile}"
                         writeYaml file: deploymentFile, data: data
+
+                        sh "git add ."
+                        sh "git commit -m 'releasing new version ${VERSION}'"
+                        if(branchExists) {
+                            sh "git push"
+                        } else {
+                            sh "git push --set-upstream origin release-${VERSION}"
+                        }
                     }
                 }
             }
