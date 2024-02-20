@@ -17,8 +17,8 @@ pipeline {
             }
             steps {
                 script {
-                    //sh "git clone https://github.com/zoltanvacz/${AppRepo}.git"
-                    sh "git clone git@github.com:zoltanvacz/${AppRepo}.git"
+                    sh "git clone https://github.com/zoltanvacz/${AppRepo}.git"
+                    //sh "git clone git@github.com:zoltanvacz/${AppRepo}.git"
                 }
             }
         }
