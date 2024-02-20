@@ -2,7 +2,7 @@ pipeline {
     agent any
     parameters {
         choice(name: 'Application', choices: ['Devops-Test-App'], description: 'Select application')
-        string(name: 'VERSION', description: 'Enter version')
+        string(name: 'VERSION', description: 'Enter version', defaultValue: '1.0')
     }
     environment {
         DOCKER_CREDS = credentials('docker')
