@@ -24,6 +24,7 @@ pipeline {
             steps {
                 script {
                     dir('Devops-Test-App-Config') {
+                        sh "git checkout main"
                         sh "git pull"
                         //def branchExists = sh "git rev-parse --verify origin/release-${VERSION}"
                         def branchExists = (sh (script: "git rev-parse --verify origin/release-${VERSION}", returnStatus: true) == 0)
