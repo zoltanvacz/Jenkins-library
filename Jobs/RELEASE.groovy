@@ -20,7 +20,7 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage('Create Release Branch') {
             steps {
                 script {
                     dir('Devops-Test-App-Config') {
@@ -30,13 +30,10 @@ pipeline {
                         def branchExists = (sh (script: "git rev-parse --verify origin/release-${VERSION}", returnStatus: true) == 0)
                         if (branchExists) {
                             echo "Branch already exists!"
-                            buildSetResult(currentBuild, 'FAILURE')
                         } else {
                             sh "git checkout -b release-${VERSION}"
                         }
                     }
-                    echo "Deploying new version ${VERSION}..."
-
                 }
             }
         }
