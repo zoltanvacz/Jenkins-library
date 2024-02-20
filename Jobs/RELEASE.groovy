@@ -12,7 +12,7 @@ pipeline {
         stage('Clone App Repo') {
             steps {
                 script {
-                    def AppRepo = "${env:Application}-Config"
+                    def AppRepo = "${env.Application}-Config"
                     when {
                         expression { return !fileExists(AppRepo) }
                         steps {
