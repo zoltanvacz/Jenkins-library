@@ -23,8 +23,13 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh "pwd"
+                    dir('Devops-Test-App-Config') {
+                        sh "git pull"
+                        def branchExists = sh "git rev-parse --verify origin/release-${VERSION}"
+                        echo branchExists
+                    }
                     echo "Deploying new version ${VERSION}..."
+
                 }
             }
         }
