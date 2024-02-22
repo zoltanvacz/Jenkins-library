@@ -17,8 +17,11 @@ pipeline {
             }
             steps {
                 script {
-                    sh "git clone https://github.com/zoltanvacz/${AppRepo}.git"
+                    //sh "git clone https://github.com/zoltanvacz/${AppRepo}.git"
                     //sh "git clone git@github.com:zoltanvacz/${AppRepo}.git"
+                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], 
+                    doGenerateSubmoduleConfigurations: false, extensions: [], 
+                    submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:zoltanvacz/Devops-Test-App-Config.git']]])
                 }
             }
         }
