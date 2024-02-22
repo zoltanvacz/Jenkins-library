@@ -51,7 +51,7 @@ pipeline {
                         sh "rm -f ${deploymentFile}"
                         writeYaml file: deploymentFile, data: data
 
-                        sh "git config --global user.email 'vaczzoltan12@gmail.com"
+                        sh "git config --global user.email 'vaczzoltan12@gmail.com'"
                         sh "git config --global user.name 'zoltanvacz'"
                         sh "git remote set-url origin https://github.com/zoltanvacz/Devops-Test-App-Config.git"
                         sh "git add ."
