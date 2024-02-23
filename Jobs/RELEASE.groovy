@@ -28,7 +28,7 @@ pipeline {
                 script {
                     dir('Devops-Test-App-Config') {
                         sh "git checkout main"
-                        sh "git pull"
+                        sh "git pull origin main"
                         //def branchExists = sh "git rev-parse --verify origin/release-${VERSION}"
                         branchExists = (sh (script: "git rev-parse --verify origin/release-${VERSION}", returnStatus: true) == 0)
                         if (branchExists) {
@@ -52,9 +52,9 @@ pipeline {
                         sh "rm -f ${deploymentFile}"
                         writeYaml file: deploymentFile, data: data
 
-                        sh "git config --global user.name '${GITHUB_CREDS_USR}'"
-                        sh "git config --global credential.helper '!echo password=${GITHUB_CREDS_PSW}; echo'"
-                        sh "git remote set-url origin https://github.com/zoltanvacz/Devops-Test-App-Config.git"
+                        //sh "git config --global user.name '${GITHUB_CREDS_USR}'"
+                        //sh "git config --global credential.helper '!echo password=${GITHUB_CREDS_PSW}; echo'"
+                        //sh "git remote set-url origin https://github.com/zoltanvacz/Devops-Test-App-Config.git"
                         sh "git add ."
                         sh "git commit -m 'releasing new version ${VERSION}'"
                         if(branchExists) {
