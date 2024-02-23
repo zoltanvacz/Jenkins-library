@@ -51,6 +51,7 @@ pipeline {
                         data.spec.template.spec.containers[0].image = "zoltanvacz/devops-test-app:${VERSION}"
                         sh "rm -f ${deploymentFile}"
                         writeYaml file: deploymentFile, data: data
+                        sh "cat ${deploymentFile}"
 
                         //sh "git config --global user.name '${GITHUB_CREDS_USR}'"
                         //sh "git config --global credential.helper '!echo password=${GITHUB_CREDS_PSW}; echo'"
