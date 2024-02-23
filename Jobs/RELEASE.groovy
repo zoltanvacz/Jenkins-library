@@ -9,6 +9,7 @@ pipeline {
         DOCKER_CREDS = credentials('docker')
         GITHUB_TOKEN = credentials('GitHubToken')
         AppRepo = "${env.Application}-Config"
+        GITHUB_CREDS = credentials('GITHUB_CREDS')
     }
     stages {
         stage('Clone App Repo') {
@@ -17,11 +18,8 @@ pipeline {
             }
             steps {
                 script {
-                    //sh "git clone https://github.com/zoltanvacz/${AppRepo}.git"
+                    sh "git clone https://github.com/zoltanvacz/${AppRepo}.git"
                     //sh "git clone git@github.com:zoltanvacz/${AppRepo}.git"
-                    checkout([$class: 'GitSCM', branches: [[name: '*/main']], 
-                    doGenerateSubmoduleConfigurations: false, extensions: [], 
-                    submoduleCfg: [], userRemoteConfigs: [[url: 'git@github.com:zoltanvacz/Devops-Test-App-Config.git']]])
                 }
             }
         }
@@ -54,8 +52,8 @@ pipeline {
                         sh "rm -f ${deploymentFile}"
                         writeYaml file: deploymentFile, data: data
 
-                        sh "git config --global user.email 'vaczzoltan12@gmail.com'"
-                        sh "git config --global user.name 'zoltanvacz'"
+                        sh "git config --global user.name '${GITHUB_CREDS_USR}'"
+                        sh "git config --global credential.helper '!echo password=${GITHUB_CREDS_PSW}; echo'"
                         sh "git remote set-url origin https://github.com/zoltanvacz/Devops-Test-App-Config.git"
                         sh "git add ."
                         sh "git commit -m 'releasing new version ${VERSION}'"
