@@ -93,6 +93,7 @@ pipeline {
                         customHeaders: [[name: 'Authorization', value: "Bearer ${GITHUB_TOKEN}"]]
                     )
                     echo "PR created: ${response.status}"
+                    echo "PR URL: ${response.content.url}"
                 }
             }
         }
