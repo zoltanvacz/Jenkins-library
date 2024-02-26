@@ -80,7 +80,7 @@ pipeline {
         stage('Cleanup env') {
             steps {
                 script {
-                    sh "rmdir -rf ${AppRepo}"
+                    sh "rm -r ${AppRepo}"
                 }
             }
         }
