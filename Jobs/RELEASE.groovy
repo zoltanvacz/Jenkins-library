@@ -109,7 +109,7 @@ pipeline {
                         httpMode: 'PUT',
                         requestBody: mergePayload,
                         url: "https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls/${prNumber}/merge" ,
-                        customHeaders: [[name: 'Authorization', value: "Bearer ${GITHUB_TOKEN}"]]
+                        customHeaders: [[name: 'Authorization', value: "token ${GITHUB_TOKEN}"]]
                     )
                 }
             }
