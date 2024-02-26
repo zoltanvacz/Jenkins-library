@@ -74,11 +74,25 @@ pipeline {
             steps {
                 script {
                     echo "Merge PR..."
-                    def response = sh "curl -L -X POST -H \"Accept: application/vnd.github+json\" -H \"Authorization: Bearer ${GITHUB_TOKEN}\" -H \"X-GitHub-Api-Version: 2022-11-28\" -d '{\"title\":\"release-1.1\",\"body\":\"release 1.1\",\"head\":\"release-1.1\",\"base\":\"main\"}' https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls"          
-                    if(response) {
-                        echo "PR created"
-                        echo response['number']
+
+                    def payload = """
+                    {
+                        "title": "Release ${VERSION}",
+                        "head": "release-${VERSION}",
+                        "base": "main",
+                        "body": "Release ${VERSION}",
+                        "maintainer_can_modify": true
                     }
+                    """
+                    def response = httpRequest(
+                        acceptType: 'APPLICATION_JSON',
+                        contentType: 'APPLICATION_JSON',
+                        httpMode: 'POST',
+                        requestBody: payload,
+                        responseHandle: 'NONE',
+                        url: "https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls" ,
+                        customHeaders: [[name: 'Authorization', value: "Bearer ${GITHUB_TOKEN}"]]
+                    )
                 }
             }
         }
