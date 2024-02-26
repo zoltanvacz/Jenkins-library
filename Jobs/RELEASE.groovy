@@ -94,6 +94,23 @@ pipeline {
                     def jsonResponse = readJSON text: response.content
                     def prNumber = jsonResponse.number
                     echo "Pull request created successfully. PR Number: ${prNumber}"
+
+                    echo "Merge PR..."
+                    def mergePayload = """
+                    {
+                        "commit_title": "Merge release-${VERSION} to main",
+                        "commit_message": "Merge release-${VERSION} to main",
+                        "sha": "release-${VERSION}"
+                    }
+                    """
+                    def mergeResponse = httpRequest(
+                        acceptType: 'APPLICATION_JSON',
+                        contentType: 'APPLICATION_JSON',
+                        httpMode: 'PUT',
+                        requestBody: mergePayload,
+                        url: "https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls/${prNumber}/merge" ,
+                        customHeaders: [[name: 'Authorization', value: "Bearer ${GITHUB_TOKEN}"]]
+                    )
                 }
             }
         }
