@@ -73,7 +73,33 @@ pipeline {
         stage('Merge PR') {
             steps {
                 script {
+                    echo "Creating PR..."
+                    def payload = """
+                    {
+                        "title": "Releaing new version: ${VERSION}",
+                        "head": "release-${VERSION}",
+                        "base": "main",
+                        "body": "Releaing new version: ${VERSION}",
+                        "maintainer_can_modify": true
+                    }
+                    """
+                    def response = httpRequest(
+                        httpMode: 'POST',
+                        url: "https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls",
+                        authentication: 'GITHUB_CREDS',
+                        contentType: 'APPLICATION_JSON',
+                        requestBody: payload
+                    )
+
                     echo "Merging PR..."
+                    def prNumber = response.data.number
+                    httpRequest(
+                        httpMode: 'PUT',
+                        url: "https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls/${prNumber}/merge",
+                        authentication: 'GITHUB_CREDS',
+                        contentType: 'APPLICATION_JSON',
+                        requestBody: '{"commit_title": "Releasing new version: ${VERSION}"}'
+                    )
                 }
             }
         }
