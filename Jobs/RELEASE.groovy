@@ -88,12 +88,11 @@ pipeline {
                         contentType: 'APPLICATION_JSON',
                         httpMode: 'POST',
                         requestBody: payload,
-                        responseHandle: 'NONE',
                         url: "https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls" ,
                         customHeaders: [[name: 'Authorization', value: "Bearer ${GITHUB_TOKEN}"]]
                     )
                     echo "PR created: ${response.status}"
-                    echo "PR URL: ${response.content.url}"
+                    echo "PR URL: ${response.content}"
                 }
             }
         }
