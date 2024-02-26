@@ -104,10 +104,7 @@ pipeline {
                     }
                     """
                     def mergeResponse = httpRequest(
-                        acceptType: 'APPLICATION_JSON',
-                        contentType: 'APPLICATION_JSON',
                         httpMode: 'PUT',
-                        requestBody: mergePayload,
                         url: "https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls/${prNumber}/merge" ,
                         customHeaders: [[name: 'Authorization', value: "token ${GITHUB_TOKEN}"]]
                     )
