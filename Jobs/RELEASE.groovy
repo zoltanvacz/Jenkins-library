@@ -91,8 +91,9 @@ pipeline {
                         url: "https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls" ,
                         customHeaders: [[name: 'Authorization', value: "Bearer ${GITHUB_TOKEN}"]]
                     )
-                    echo "PR created: ${response.status}"
-                    echo "PR number: ${response.content.number}"
+                    def jsonResponse = readJSON text: response.content
+                    def prNumber = jsonResponse.number
+                    echo "Pull request created successfully. PR Number: ${prNumber}"
                 }
             }
         }
