@@ -73,7 +73,7 @@ pipeline {
         stage('Merge PR') {
             steps {
                 script {
-                    echo "Merge PR..."
+                    echo "Create PR..."
                     def payload = """
                     {
                         "title": "Release ${VERSION}",
@@ -92,12 +92,7 @@ pipeline {
                         url: "https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls" ,
                         customHeaders: [[name: 'Authorization', value: "Bearer ${GITHUB_TOKEN}"]]
                     )
-
-                    echo "Merge PR"
-                    def prNumber = response.getResponseHeaders().get('Location').get(0).split("/").last()
-                    echo "PR number: ${prNumber}"
-
-
+                    echo "response: ${response}"
                 }
             }
         }
