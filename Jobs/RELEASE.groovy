@@ -73,9 +73,12 @@ pipeline {
         stage('Merge PR') {
             steps {
                 script {
-                    echo "Creating PR..."
-                    sh "curl -L -X POST -H \"Accept: application/vnd.github+json\" -H \"Authorization: Bearer ${GITHUB_TOKEN}\" -H \"X-GitHub-Api-Version: 2022-11-28\" -d '{\"title\":\"release-1.1\",\"body\":\"release 1.1\",\"head\":\"release-1.1\",\"base\":\"main\"}' https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls"          
-                    echo "Merging PR..."
+                    echo "Merge PR..."
+                    def response = sh "curl -L -X POST -H \"Accept: application/vnd.github+json\" -H \"Authorization: Bearer ${GITHUB_TOKEN}\" -H \"X-GitHub-Api-Version: 2022-11-28\" -d '{\"title\":\"release-1.1\",\"body\":\"release 1.1\",\"head\":\"release-1.1\",\"base\":\"main\"}' https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls"          
+                    if(response) {
+                        echo "PR created"
+                        echo response['number']
+                    }
                 }
             }
         }
