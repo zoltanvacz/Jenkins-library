@@ -45,7 +45,7 @@ pipeline {
             steps {
                 script {
                     echo "Deploying new version ${VERSION}..."
-                    dir('Devops-Test-App-Config') {
+                    dir("${AppRepo}") {
                         def deploymentFile = 'dev/deployment.yaml'
                         def data = readYaml file: deploymentFile
                         data.spec.template.spec.containers[0].image = "zoltanvacz/devops-test-app:${VERSION}"
@@ -80,8 +80,7 @@ pipeline {
         stage('Cleanup env') {
             steps {
                 script {
-                    sh "git checkout main"
-                    sh "git branch -D release-${VERSION}"
+                    sh "sh rmdir -rf ${AppRepo}"
                 }
             }
         }
