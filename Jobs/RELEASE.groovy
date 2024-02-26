@@ -56,8 +56,8 @@ pipeline {
                         //sh "git config --global user.name '${GITHUB_CREDS_USR}'"
                         //sh "git config --global credential.helper '!echo password=${GITHUB_CREDS_PSW}; echo'"
                         //sh "git remote set-url origin https://github.com/zoltanvacz/Devops-Test-App-Config.git"
-                        //sh "git remote rm origin"
-                        //sh "git remote add origin 'git@github.com:zoltanvacz/Devops-Test-App-Config.git'"
+                        sh "git remote rm origin"
+                        sh "git remote add origin 'git@github.com:zoltanvacz/Devops-Test-App-Config.git'"
                         
                         sh "git add ."
                         sh "git commit -m 'releasing new version ${VERSION}'"
