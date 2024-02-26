@@ -93,7 +93,10 @@ pipeline {
                         customHeaders: [[name: 'Authorization', value: "Bearer ${GITHUB_TOKEN}"]]
                     )
 
-                    echo "Response: ${response}"
+                    echo "Merge PR"
+                    def prNumber = response.getResponseHeaders().get('Location').get(0).split("/").last()
+                    echo "PR number: ${prNumber}"
+
 
                 }
             }
