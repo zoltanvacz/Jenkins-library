@@ -70,5 +70,20 @@ pipeline {
                 }
             }
         }
+        stage('Merge PR') {
+            steps {
+                script {
+                    
+                }
+            }
+        }
+        stage('Cleanup env') {
+            steps {
+                script {
+                    sh "git checkout main"
+                    sh "git branch -D release-${VERSION}"
+                }
+            }
+        }
     }
 }
