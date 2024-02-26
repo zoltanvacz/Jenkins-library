@@ -74,32 +74,8 @@ pipeline {
             steps {
                 script {
                     echo "Creating PR..."
-                    def payload = """
-                    {
-                        "title": "Releaing new version: ${VERSION}",
-                        "head": "release-${VERSION}",
-                        "base": "main",
-                        "body": "Releaing new version: ${VERSION}",
-                        "maintainer_can_modify": true
-                    }
-                    """
-                    def response = httpRequest(
-                        httpMode: 'POST',
-                        url: "https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls",
-                        authentication: 'GITHUB_CREDS',
-                        contentType: 'APPLICATION_JSON',
-                        requestBody: payload
-                    )
-
+                    sh "curl -L -X POST -H \"Accept: application/vnd.github+json\" -H \"Authorization: Bearer ${GITHUB_TOKEN}\" -H \"X-GitHub-Api-Version: 2022-11-28\" -d '{\"title\":\"release-1.1\",\"body\":\"release 1.1\",\"head\":\"release-1.1\",\"base\":\"main\"}' https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls"          
                     echo "Merging PR..."
-                    def prNumber = response.data.number
-                    httpRequest(
-                        httpMode: 'PUT',
-                        url: "https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls/${prNumber}/merge",
-                        authentication: 'GITHUB_CREDS',
-                        contentType: 'APPLICATION_JSON',
-                        requestBody: '{"commit_title": "Releasing new version: ${VERSION}"}'
-                    )
                 }
             }
         }
