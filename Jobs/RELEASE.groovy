@@ -92,7 +92,7 @@ pipeline {
                         url: "https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls" ,
                         customHeaders: [[name: 'Authorization', value: "Bearer ${GITHUB_TOKEN}"]]
                     )
-                    echo "response: ${response}"
+                    echo "response: ${response.content}"
                 }
             }
         }
