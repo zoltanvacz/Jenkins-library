@@ -73,7 +73,7 @@ pipeline {
         stage('Merge PR') {
             steps {
                 script {
-                    
+                    echo "Merging PR..."
                 }
             }
         }
