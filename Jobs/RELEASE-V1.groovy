@@ -2,14 +2,17 @@ def branchExists
 pipeline {
     agent any
     parameters {
-        choice(name: 'Application', choices: ['Devops-Test-App'], description: 'Select application')
+        choice(name: 'APPLICATION', choices: ['Devops-Test-App'], description: 'Select application')
         string(name: 'VERSION', description: 'Enter version', defaultValue: '1.0')
+        choice(name: 'REPO', choices: ['zoltanvacz'], description: 'Select repo')
     }
     environment {
         DOCKER_CREDS = credentials('docker')
         GITHUB_TOKEN = credentials('GitHubToken')
         AppRepo = "${env.Application}-Config"
         GITHUB_CREDS = credentials('GITHUB_CREDS')
+        REPO = "${env.REPO}"
+        APP_NAME = "${env.APPLICATION}".toLowerCase()
     }
     stages {
         stage('Clone App Repo') {
@@ -18,7 +21,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh "git clone https://github.com/zoltanvacz/${AppRepo}.git"
+                    sh "git clone https://github.com/${Repo}/${AppRepo}.git"
                 }
             }
         }
@@ -46,13 +49,13 @@ pipeline {
                     dir("${AppRepo}") {
                         def deploymentFile = 'dev/deployment.yaml'
                         def data = readYaml file: deploymentFile
-                        data.spec.template.spec.containers[0].image = "zoltanvacz/devops-test-app:${VERSION}"
+                        data.spec.template.spec.containers[0].image = "${Repo}/${APP_NAME}:${VERSION}"
                         sh "rm -f ${deploymentFile}"
                         writeYaml file: deploymentFile, data: data
                         sh "cat ${deploymentFile}"
 
                         sh "git remote rm origin"
-                        sh "git remote add origin 'git@github.com:zoltanvacz/Devops-Test-App-Config.git'"
+                        sh "git remote add origin 'git@github.com:${Repo}/${AppRepo}.git'"
                         
                         sh "git add ."
                         sh "git commit -m 'releasing new version ${VERSION}'"
@@ -83,7 +86,7 @@ pipeline {
                         contentType: 'APPLICATION_JSON',
                         httpMode: 'POST',
                         requestBody: payload,
-                        url: "https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls" ,
+                        url: "https://api.github.com/repos/${Repo}/${AppRepo}/pulls" ,
                         customHeaders: [[name: 'Authorization', value: "Bearer ${GITHUB_TOKEN}"]]
                     )
                     def jsonResponse = readJSON text: response.content
@@ -100,7 +103,7 @@ pipeline {
                     """
                     def mergeResponse = httpRequest(
                         httpMode: 'PUT',
-                        url: "https://api.github.com/repos/zoltanvacz/Devops-Test-App-Config/pulls/${prNumber}/merge" ,
+                        url: "https://api.github.com/repos/${Repo}/${AppRepo}/pulls/${prNumber}/merge" ,
                         customHeaders: [[name: 'Authorization', value: "token ${GITHUB_TOKEN}"]]
                     )
                 }
