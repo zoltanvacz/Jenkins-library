@@ -32,7 +32,7 @@ pipeline {
                     sh "docker image ls ${Repo}/${APP_NAME}:${env.VERSION}"
                     sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
                     sh "docker push ${Repo}/${APP_NAME}:${env.VERSION}"
-                    sh "rmdir -r ${AppRepo}"
+                    sh "rm -r ${AppRepo}"
                 }
             }
         }
