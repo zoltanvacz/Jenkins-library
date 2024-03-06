@@ -35,6 +35,7 @@ pipeline {
                         sh "docker push ${Repo}/${APP_NAME}:${env.VERSION}"
                     }
                     sh "rm -r ${AppRepo}"
+                }
             }
         }
     }
