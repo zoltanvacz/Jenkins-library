@@ -26,14 +26,15 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh "git config --global user.email 'jenkins@jenkins.com'"
-                    sh "git config --global user.name 'jenkins'"
-                    sh "docker build -t ${Repo}/${APP_NAME}:${env.VERSION} -f ${AppRepo}/Dockerfile ."
-                    sh "docker image ls ${Repo}/${APP_NAME}:${env.VERSION}"
-                    sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
-                    sh "docker push ${Repo}/${APP_NAME}:${env.VERSION}"
+                    dir("${AppRepo}") {
+                        sh "git config --global user.email 'jenkins@jenkins.com'"
+                        sh "git config --global user.name 'jenkins'"
+                        sh "docker build -t ${Repo}/${APP_NAME}:${env.VERSION} -f ${AppRepo}/Dockerfile ."
+                        sh "docker image ls ${Repo}/${APP_NAME}:${env.VERSION}"
+                        sh "docker login -u $DOCKER_CREDS_USR -p $DOCKER_CREDS_PSW"
+                        sh "docker push ${Repo}/${APP_NAME}:${env.VERSION}"
+                    }
                     sh "rm -r ${AppRepo}"
-                }
             }
         }
     }
