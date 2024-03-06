@@ -72,6 +72,7 @@ pipeline {
             steps {
                 script {
                     echo "Create PR..."
+                    def prNumber
                     def payload = """
                     {
                         "title": "Release ${VERSION}",
