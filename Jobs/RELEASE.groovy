@@ -92,6 +92,7 @@ pipeline {
                     if(response.status != 201) {
                         error("Failed to create PR. Status: ${response.status}, Response: ${response.content}")
                     }
+                    else
                     {
                         def jsonResponse = readJSON text: response.content
                         def prNumber = jsonResponse.number
