@@ -89,9 +89,14 @@ pipeline {
                         url: "https://api.github.com/repos/${Repo}/${AppRepo}/pulls" ,
                         customHeaders: [[name: 'Authorization', value: "Bearer ${GITHUB_TOKEN}"]]
                     )
-                    def jsonResponse = readJSON text: response.content
-                    def prNumber = jsonResponse.number
-                    echo "Pull request created successfully. PR Number: ${prNumber}"
+                    if(response.status != 201) {
+                        error("Failed to create PR. Status: ${response.status}, Response: ${response.content}")
+                    }
+                    {
+                        def jsonResponse = readJSON text: response.content
+                        def prNumber = jsonResponse.number
+                        echo "Pull request created successfully. PR Number: ${prNumber}"
+                    }
 
                     echo "Merge PR..."
                     def mergePayload = """
