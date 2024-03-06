@@ -96,7 +96,7 @@ pipeline {
                     else
                     {
                         def jsonResponse = readJSON text: response.content
-                        def prNumber = jsonResponse.number
+                        prNumber = jsonResponse.number
                         echo "Pull request created successfully. PR Number: ${prNumber}"
                     }
 
