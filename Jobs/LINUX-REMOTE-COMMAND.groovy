@@ -14,8 +14,10 @@ pipeline {
                     remote.name = 'linux'
                     remote.host = "${env.HOST}"
                     remote.user = "${params.USER}"
-                    remote.password = "${params.PASSWORD}"
+                    remote.password = '$params.PASSWORD'
                     remote.allowAnyHosts = true
+
+                    echo remote.password
 
                     //sshScript remote: remote, script: "/scripts/script.sh"
                     sshCommand remote: remote, command: "sh ~/scripts/script.sh"
