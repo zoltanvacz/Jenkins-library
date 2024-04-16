@@ -12,7 +12,7 @@ import hudson.model.*
 
 env.WORKSPACE = "/home/jenkins/agent"
 echo "${env.WORKSPACE}"
-def yamlFiles = new FilePath('${env.WORKSPACE}/config/appservice').list('**/*.yaml')
+def yamlFiles = new FilePath("${env.WORKSPACE}", 'config/appservice').list('**/*.yaml')
 def env = Jenkins.instance.getGlobalNodeProperties()[0].getEnvVars()
 envId = env["ENV_ID"] ? env["ENV_ID"] : "all"
 def currentBuild = Thread.currentThread().executable
