@@ -11,6 +11,7 @@ import hudson.*
 import hudson.model.*
 
 echo "${env.WORKSPACE}"
+sh "pwd"
 def yamlFiles = new FilePath(hudson.model.Executor.currentExecutor().getCurrentWorkspace().absolutize(), 'config/appservice').list('**/*.yaml')
 def env = Jenkins.instance.getGlobalNodeProperties()[0].getEnvVars()
 envId = env["ENV_ID"] ? env["ENV_ID"] : "all"
