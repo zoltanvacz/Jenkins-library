@@ -1,4 +1,4 @@
-@Grab('org.yaml:snakeyaml:1.33')
+//@Grab('org.yaml:snakeyaml:1.33')
 
 import com.seed.jobs.JobFactory
 import com.seed.utils.Parser
