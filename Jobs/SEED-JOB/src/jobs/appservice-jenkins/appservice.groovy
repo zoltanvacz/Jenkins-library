@@ -1,7 +1,7 @@
 //@Grab('org.yaml:snakeyaml:1.33')
 
-import main.groovy.com.seed.jobs.JobFactory
-import main.groovy.com.seed.utils.Parser
+import com.seed.jobs.JobFactory
+import com.seed.utils.Parser
 import hudson.FilePath
 import org.yaml.snakeyaml.Yaml
 import jenkins.*
