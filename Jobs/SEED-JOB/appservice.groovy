@@ -10,23 +10,8 @@ import jenkins.model.*
 import hudson.*
 import hudson.model.*
 
-
-def executor = hudson.model.Executor.currentExecutor()
-if (executor) {
-    def workspace = executor.getCurrentWorkspace()
-    if (workspace) {
-        def yamlFiles = new FilePath(workspace.absolutize(), 'config/appservice').list('**/*.yaml')
-        yamlFiles.each { file ->
-            // Process YAML files
-        }
-    } else {
-        println("Workspace is null.")
-    }
-} else {
-    println("Executor is null.")
-}
-
-//def yamlFiles = new FilePath(hudson.model.Executor.currentExecutor().getCurrentWorkspace().absolutize(), 'config/appservice').list('**/*.yaml')
+echo "${env.WORKSPACE}"
+def yamlFiles = new FilePath(hudson.model.Executor.currentExecutor().getCurrentWorkspace().absolutize(), 'config/appservice').list('**/*.yaml')
 def env = Jenkins.instance.getGlobalNodeProperties()[0].getEnvVars()
 envId = env["ENV_ID"] ? env["ENV_ID"] : "all"
 def currentBuild = Thread.currentThread().executable
