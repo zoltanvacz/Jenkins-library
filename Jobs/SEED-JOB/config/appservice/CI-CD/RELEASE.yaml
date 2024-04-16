@@ -1,0 +1,25 @@
+kind: PipelineJob
+metadata:
+  name: RELEASE # job name
+  description: "release to PROD" # job description
+spec:
+  targetEnv: PROD
+  owners: Zoli
+  remoteUrl: https://github.com/zoltanvacz/Jenkins-library.git
+  gitHubCredentialId: GIT
+  githubBranch: main
+  jenkinsfile: Jobs/RELEASE.groovy
+  folders:
+    - name: application-operations  # your pillar name, mandatory
+      view:
+        name: cks
+        description: cks
+    - name: application-operations/release-operations
+    - name: application-operations/release-operations/promote-releases
+  parameters:
+    - name: APPLICATION
+      type: string
+    - name: VERSION
+      type: string
+    - name: REPO
+      type: string
