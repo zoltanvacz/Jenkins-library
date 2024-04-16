@@ -1,5 +1,5 @@
 //@Grab('org.yaml:snakeyaml:1.33')
-@Library('Jenkins-library')
+@Library('Jenkins-library@main') _
 
 import com.seed.jobs.JobFactory
 import com.seed.utils.Parser
